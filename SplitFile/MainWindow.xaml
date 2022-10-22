@@ -11,15 +11,42 @@
         <TextBlock HorizontalAlignment="Left" Margin="111,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="22" Width="431" FontSize="16">Divide um arquivo de texto em 2 ou mais arquivos menores.</TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="570,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="260" Width="202" FontSize="16" FontWeight="Normal" Opacity="1">
             <Bold>1° - </Bold> Selecione o arquivo que deseja dividir.<LineBreak/><Bold>2° - </Bold>  Defina em quantas partes você quer dividir o arquivo.<LineBreak/>
-            <Bold>3° - </Bold>  Defina quantas linhas você quer manter em todos os arquivos (contando do início).<LineBreak/><Bold>4° - </Bold>  Defina o caminho onde deseja salvar os arquivos de saída.
+            <Bold>3° - </Bold> Defina se você quer manter a primeira linha original em todos os arquivos finais.<LineBreak/><Bold>4° - </Bold>  Defina o caminho onde deseja salvar os arquivos de saída.
         </TextBlock>
         <TextBlock HorizontalAlignment="Left" Margin="570,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="19" Width="106" FontSize="16" FontWeight="Bold">Instruções:</TextBlock>
         <Rectangle HorizontalAlignment="Left" Height="285" Margin="562,21,0,0" Stroke="Black" VerticalAlignment="Top" Width="218"/>
         <Rectangle HorizontalAlignment="Left" Height="251" Margin="18,55,0,0" Stroke="Black" VerticalAlignment="Top" Width="524"/>
         <TextBox x:Name="TextBoxOriginFileName" HorizontalAlignment="Left" Margin="29,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" Height="24" FontSize="13"/>
         <Label Content="1 - Arquivo de origem:" HorizontalAlignment="Left" Margin="29,55,0,0" VerticalAlignment="Top" Width="131" Padding="0,3,0,0" Height="22"/>
-        <local:SplitFileButton x:Name="ButtonSearchOriginFile" Type="TextDocuments" Content="Pesquisar.." HorizontalAlignment="Left" Margin="437,77,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.025,-0.248" Height="24" Width="96"/>
+        <local:SplitFileButton x:Name="ButtonSearchOriginFile" Tag="TextBoxOriginFileName" Type="TextDocuments" Content="Pesquisar.." HorizontalAlignment="Left" Margin="437,77,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.025,-0.248" Height="24" Width="96"/>
         <Label Content="2 - Quantidade de partes: (máx 999)" HorizontalAlignment="Left" Margin="29,106,0,0" VerticalAlignment="Top" Width="195" Padding="0,3,0,0" Height="22"/>
         <TextBox x:Name="TextBoxPartsQuantity" PreviewTextInput="TextBoxPartsQuantity_PreviewTextInput" HorizontalAlignment="Left" Margin="29,128,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="43" Height="24" FontSize="13"/>
+        <Label Content="3 - Manter a primeira linha?" HorizontalAlignment="Left" Margin="29,157,0,0" VerticalAlignment="Top" Width="152" Padding="0,3,0,0" Height="22"/>
+        <CheckBox x:Name="CheckBoxMantainFirstLine" HorizontalAlignment="Left" Margin="186,160,0,0" VerticalAlignment="Top"/>
+        <Label Content="4 - Caminho de destino:" HorizontalAlignment="Left" Margin="29,184,0,0" VerticalAlignment="Top" Width="131" Padding="0,3,0,0" Height="22"/>
+        <TextBox x:Name="TextBoxDestinyPath" HorizontalAlignment="Left" Margin="29,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="403" Height="24" FontSize="13"/>
+        <local:SplitFileButton x:Name="ButtonSearchDestinyPath" Tag="TextBoxDestinyPath" Type="Path" Content="Pesquisar.." HorizontalAlignment="Left" Margin="437,211,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.025,-0.248" Height="24" Width="96"/>
+        <local:SplitFileButton x:Name="ButtonExecute" Type="Button" Content="Executar" HorizontalAlignment="Left" Margin="437,241,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.025,-0.248" Height="57" Width="96"/>
+        <Label Content="Mensagens: (Logs)" HorizontalAlignment="Left" Margin="29,240,0,0" VerticalAlignment="Top" Width="110" Padding="0,3,0,0" Height="22" FontWeight="Bold"/>
+        <TextBlock x:Name="TextBlockLogs" HorizontalAlignment="Left" Margin="29,262,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Height="36" Width="403"/>
+        <Label Content="Arquivos de destino:" HorizontalAlignment="Left" Margin="18,311,0,0" VerticalAlignment="Top" Width="132" Padding="0,3,0,0" Height="22" FontWeight="Bold"/>
+        <ListView x:Name="ListViewArchieves" ItemsSource="{Binding teste}" Margin="18,338,20,22">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Files Information">
+
+                    <GridViewColumn DisplayMemberBinding="{Binding FileName}" Width="450">
+                        <GridViewColumnHeader>Nome do arquivo
+                            <GridViewColumnHeader.ContextMenu>
+                                <ContextMenu >
+                                    <MenuItem Header="Ascending" />
+                                    <MenuItem Header="Descending" />
+                                </ContextMenu>
+                            </GridViewColumnHeader.ContextMenu>
+                        </GridViewColumnHeader>
+                    </GridViewColumn>
+                    
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
