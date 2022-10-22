@@ -26,7 +26,6 @@ namespace SplitFile
     {
         public MainWindow()
         {
-            ObservableCollection<ClassToBind> ListaNomes = new ObservableCollection<ClassToBind>();
             InitializeComponent();
 
             NameScope.SetNameScope(this, new NameScope());
@@ -35,16 +34,8 @@ namespace SplitFile
 
             ButtonExecute.Click += ButtonExecute_Click;
 
-            string[] listaNomes = System.IO.Directory.GetFiles("C:\\Users\\Mateus\\Downloads\\CMV_DETALHADO");
-            ClassToBind teste = new ClassToBind();
-            //this.DataContext = listaNomes;
-            //ListViewArchieves.ItemsSource = listaNomes;
-            foreach (string file in listaNomes)
-            {
-                teste.FileName = file;
-            }
+            //this.DataContext = this;
 
-            this.DataContext = this;
         }
 
         private void ButtonExecute_Click(object sender, RoutedEventArgs e)
@@ -52,6 +43,9 @@ namespace SplitFile
             Processor processor = new Processor(TextBoxOriginFileName.Text, Int32.Parse(TextBoxPartsQuantity.Text)
                 ,(bool)CheckBoxMantainFirstLine.IsChecked, TextBoxDestinyPath.Text, TextBlockLogs);
             processor.Read();
+
+            string[] listaNomes = System.IO.Directory.GetFiles(TextBoxDestinyPath.Text);
+            ListViewArchieves.ItemsSource = listaNomes;
         }
 
         private void TextBoxPartsQuantity_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -67,29 +61,6 @@ namespace SplitFile
             if ((TextBox)this.FindName(textBoxName) != null)
                 this.UnregisterName(textBoxName);
             this.RegisterName(textBoxName, textBox);
-        }
-    }
-
-    public class ClassToBind : INotifyPropertyChanged
-    {
-        private string _myProperty = "";
-
-        public string FileName
-        {
-            get => _myProperty;
-            set
-            {
-                if (value == _myProperty) return;
-                _myProperty = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
