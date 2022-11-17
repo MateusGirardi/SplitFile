@@ -70,11 +70,11 @@ namespace SplitFile
             if (!valid) { throw new ArgumentException("Invalid type!"); }
         }
 
-        private void SplitFileButtonPathDialog_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SplitFileButtonPathDialog_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new WinForms.FolderBrowserDialog();
             dialog.Description =
-                "Select the directory that you want to use as the default.";
+                "Selecione um diretório para salvar os arquivos.";
 
             dialog.ShowNewFolderButton = true;
             dialog.RootFolder = Environment.SpecialFolder.Personal;
@@ -87,7 +87,7 @@ namespace SplitFile
             }
         }
 
-        private void SplitFileButtonTextDocumentsDialog_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void SplitFileButtonTextDocumentsDialog_Click(object sender, RoutedEventArgs e)
         {
             var dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.FileName = "Document";

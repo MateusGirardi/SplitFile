@@ -42,7 +42,7 @@ namespace SplitFile
         {
             Processor processor = new Processor(TextBoxOriginFileName.Text, Int32.Parse(TextBoxPartsQuantity.Text)
                 ,(bool)CheckBoxMantainFirstLine.IsChecked, TextBoxDestinyPath.Text, TextBlockLogs);
-            processor.Read();
+            processor.Write();
 
             string[] listaNomes = System.IO.Directory.GetFiles(TextBoxDestinyPath.Text);
             ListViewArchieves.ItemsSource = listaNomes;

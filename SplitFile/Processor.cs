@@ -12,39 +12,72 @@ namespace SplitFile
     {
         private string OriginPath = string.Empty;
         private int PartsQuantity = 0;
-        private bool FirstLine = false;
+        private bool MaintainFirstLine = false;
         private string DestinyPath = string.Empty;
+        private string FirstLine;
         private TextBlock outPutMessage;
 
         public Processor(string oP, int pQ, bool fL, string dP,TextBlock oPM)
         {
             OriginPath = oP;
             PartsQuantity = pQ;
-            FirstLine = fL;
+            MaintainFirstLine = fL;
             DestinyPath = dP;
             outPutMessage = oPM;
         }
-
-        public void Read()
+        private IEnumerable<string> Read(string file)
         {
-            try
+            using (StreamReader sr = new StreamReader(file))
             {
-                using (StreamReader sr = new StreamReader(OriginPath))
+                string line;
+                // Read and display lines from the file until the end of
+                // the file is reached.
+                while ((line = sr.ReadLine()) != null)
                 {
-                    string line;
-                    // Read and display lines from the file until the end of
-                    // the file is reached.
-                    while ((line = sr.ReadLine()) != null)
-                    {
-                        outPutMessage.Text = line;
-                        break;
-
-                    }
+                    yield return line;
                 }
             }
-            catch (Exception ex)
+
+        }
+        public void Write()
+        {
+            decimal numberOfLines = FileHandler.GetNumberOfLines(OriginPath);
+            decimal rest = ( (numberOfLines / PartsQuantity) - ( (int)(numberOfLines / PartsQuantity) ) ) * PartsQuantity;
+            int linesByParts = (int)(numberOfLines / PartsQuantity);
+            int parts = PartsQuantity;
+            bool firstLine = MaintainFirstLine;
+            SplitFileFile file = FileHandler.GenerateFile(DestinyPath); ;
+
+            int index = 1;
+            foreach(string l in Read(OriginPath))
             {
-                outPutMessage.Text = ex.Message;   
+                if (FirstLine == null)
+                {
+                    FirstLine = l;
+                }
+
+                file.File.Write(Encoding.UTF8.GetBytes(l),0,Encoding.UTF8.GetByteCount(l));
+                file.File.Write(Encoding.UTF8.GetBytes(Environment.NewLine),0,Encoding.UTF8.GetByteCount(Environment.NewLine));
+
+                if( (parts > 1 && index == linesByParts)
+                    || ( parts == 1 && index == (linesByParts + rest) ) )
+                {
+                    index = 0;
+                    parts--;
+                    file.File.Close();
+                }
+
+                index++;
+
+                if (index == 1 && parts > 0)
+                {
+                    file = FileHandler.GenerateFile(DestinyPath);
+                    if(MaintainFirstLine == true)
+                    {
+                        file.File.Write(Encoding.UTF8.GetBytes(FirstLine), 0, Encoding.UTF8.GetByteCount(FirstLine));
+                        file.File.Write(Encoding.UTF8.GetBytes(Environment.NewLine), 0, Encoding.UTF8.GetByteCount(Environment.NewLine));
+                    }
+                }
             }
         }
     }
