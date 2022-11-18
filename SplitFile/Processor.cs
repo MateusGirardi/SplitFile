@@ -56,8 +56,15 @@ namespace SplitFile
                     FirstLine = l;
                 }
 
-                file.File.Write(Encoding.UTF8.GetBytes(l),0,Encoding.UTF8.GetByteCount(l));
-                file.File.Write(Encoding.UTF8.GetBytes(Environment.NewLine),0,Encoding.UTF8.GetByteCount(Environment.NewLine));
+                try
+                {
+                    file.File.Write(Encoding.UTF8.GetBytes(l), 0, Encoding.UTF8.GetByteCount(l));
+                    file.File.Write(Encoding.UTF8.GetBytes(Environment.NewLine), 0, Encoding.UTF8.GetByteCount(Environment.NewLine));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString()); 
+                }
 
                 if( (parts > 1 && index == linesByParts)
                     || ( parts == 1 && index == (linesByParts + rest) ) )
@@ -65,6 +72,11 @@ namespace SplitFile
                     index = 0;
                     parts--;
                     file.File.Close();
+                }
+
+                if(parts <= 0)
+                {
+                    Console.WriteLine("teste");
                 }
 
                 index++;

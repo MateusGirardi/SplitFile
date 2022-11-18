@@ -35,13 +35,11 @@ namespace SplitFile
         public static int GetNumberOfLines(string originPath)
         {
             using(StreamReader sr = new StreamReader(originPath)){
-                int c = 0, count = 1;
-                while ((c = sr.Read()) != -1)
+                string line;
+                int count = 0;
+                while ((line = sr.ReadLine()) != null)
                 {
-                    if (c == '\n')
-                    {
-                        count++;
-                    }
+                    count++;
                 }
                 return count;
             }
