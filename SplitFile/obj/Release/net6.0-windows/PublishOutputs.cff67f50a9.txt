@@ -1,0 +1,5 @@
+C:\Users\Mateus\Desktop\Projetos\SplitFIle\bin\net6.0\SplitFile.exe
+C:\Users\Mateus\Desktop\Projetos\SplitFIle\bin\net6.0\SplitFile.dll
+C:\Users\Mateus\Desktop\Projetos\SplitFIle\bin\net6.0\SplitFile.deps.json
+C:\Users\Mateus\Desktop\Projetos\SplitFIle\bin\net6.0\SplitFile.runtimeconfig.json
+C:\Users\Mateus\Desktop\Projetos\SplitFIle\bin\net6.0\SplitFile.pdb
